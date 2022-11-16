@@ -1,4 +1,4 @@
-import JSONObjectMapper from "../jsonobjectmapper";
+import {JSONObjectMapper} from "../jsonobjectmapper";
 
 
 

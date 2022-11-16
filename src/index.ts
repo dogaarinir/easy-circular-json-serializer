@@ -1,5 +1,2 @@
-import * as JSONObjectMapper from './jsonobjectmapper';
+export {JSONObjectMapper} from './jsonobjectmapper';
 
-export default {
-  JSONObjectMapper,
-};

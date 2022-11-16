@@ -1,4 +1,4 @@
-export default class JSONObjectMapper<T> {
+export class JSONObjectMapper<T> {
   static readonly _ref_attr: string = 'circRef';
   static readonly _ref_attr_id: string = JSONObjectMapper._ref_attr + 'Id';
 
