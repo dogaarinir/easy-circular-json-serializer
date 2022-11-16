@@ -1,13 +1,13 @@
 export default class JSONObjectMapper<T> {
-  static readonly _ref_attr: string = "circRef";  
-  static readonly _ref_attr_id: string = JSONObjectMapper._ref_attr + "Id";
+  static readonly _ref_attr: string = 'circRef';
+  static readonly _ref_attr_id: string = JSONObjectMapper._ref_attr + 'Id';
 
   /**
-   * 
+   *
    * @returns A replacer function, which returns primitive values as they are
    * and maps complex objects to a reference.
    */
-  _getCircularReplacer:any = () => {
+  _getCircularReplacer: any = () => {
     const seen = new WeakSet();
     const objectMap = new Map();
     let id = 1;
@@ -16,7 +16,7 @@ export default class JSONObjectMapper<T> {
         // the value is an object. Have we ever seen it before?
         if (seen.has(value)) {
           // yes, so we do not need to serialize it again. Just return an recursiveRef-instance.
-          const ret:any = {};
+          const ret: any = {};
           ret[JSONObjectMapper._ref_attr] = objectMap.get(value);
           return ret;
         }
@@ -27,12 +27,12 @@ export default class JSONObjectMapper<T> {
       }
       return value;
     };
-  }
+  };
 
   /**
-   * 
+   *
    * @param source An object which may contain recursive references.
-   * @returns 
+   * @returns
    */
   toJSON(source: T): string {
     return JSON.stringify(source, this._getCircularReplacer());
