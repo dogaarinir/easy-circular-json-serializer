@@ -1,0 +1,23 @@
+{
+  "name": "easy-circular-json-serializer",
+  "version": "1.0.0",
+  "description": "NPM for serialization and de-serialization of circular objects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dogaarinir/easy-circular-json-serializer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dogaarinir/easy-circular-json-serializer/issues"
+  },
+  "homepage": "https://github.com/dogaarinir/easy-circular-json-serializer#readme",
+  "devDependencies": {
+    "typescript": "^4.9.3"
+  }
+}
