@@ -4,6 +4,7 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "declaration": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
