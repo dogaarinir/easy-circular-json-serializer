@@ -10,6 +10,6 @@
     "allowSyntheticDefaultImports": true,
     "outDir": "./lib",
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "include": ["src", "specs"],
+  "exclude": ["node_modules", "**/lib/*"]
 }
