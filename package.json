@@ -3,7 +3,7 @@
   "version": "1.0.4",
   "description": "NPM for serialization and de-serialization of circular objects.",
   "main": "lib/index.js",
-  "types": "lib/jsonobjectmapper.d.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
