@@ -2,8 +2,8 @@
   "name": "easy-circular-json-serializer",
   "version": "1.0.5",
   "description": "NPM for serialization and de-serialization of circular objects.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/src/index.js",
+  "types": "lib/src/index.d.ts",
   "files": [
     "lib/**/*"
   ],
@@ -11,6 +11,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run format && npm run build",
+    "compile": "npx tsc",
     "build": "webpack",
     "test": "jest --config jestconfig.json"
   },

@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "sourceMap": true,    
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES2015",
+    "module": "commonjs",
     "strict": true,
     "declaration": true,
     "experimentalDecorators": true,
