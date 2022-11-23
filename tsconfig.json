@@ -11,5 +11,5 @@
     "outDir": "./lib",
   },
   "include": ["src", "specs"],
-  "exclude": ["node_modules", "**/lib/*"]
+  "exclude": ["node_modules", "lib"]
 }

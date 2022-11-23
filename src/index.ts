@@ -1,5 +1,5 @@
 import { JSONObjectMapper } from './jsonobjectmapper';
+const EasyJSON: JSONObjectMapper = new JSONObjectMapper();
 
-export {JSONObjectMapper}
+export {JSONObjectMapper, EasyJSON}
 
-//const a: JSONObjectMapper = new JSONObjectMapper();
