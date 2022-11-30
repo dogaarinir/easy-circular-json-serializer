@@ -1,6 +1,6 @@
-export class JSONObjectMapper<T> {
-  static readonly _ref_attr: string = 'circRef';
-  static readonly _ref_attr_id: string = JSONObjectMapper._ref_attr + 'Id';
+export class JSONObjectMapper {
+  private static readonly refAttr: string = 'circRef';
+  private static readonly refAttrId: string = JSONObjectMapper.refAttr + 'Id';
 
   /**
    *
@@ -17,12 +17,12 @@ export class JSONObjectMapper<T> {
         if (seen.has(value)) {
           // yes, so we do not need to serialize it again. Just return an recursiveRef-instance.
           const ret: any = {};
-          ret[JSONObjectMapper._ref_attr] = objectMap.get(value);
+          ret[JSONObjectMapper.refAttr] = objectMap.get(value);
           return ret;
         }
         // no, so we will serialize and mark it, so we can remember it again.
         seen.add(value);
-        value[JSONObjectMapper._ref_attr_id] = id;
+        value[JSONObjectMapper.refAttrId] = id;
         objectMap.set(value, id++);
       }
       return value;
@@ -34,19 +34,19 @@ export class JSONObjectMapper<T> {
    * @param source An object which may contain recursive references.
    * @returns
    */
-  toJSON(source: T): string {
+  toJSON<T extends object>(source: T): string {
     return JSON.stringify(source, this._getCircularReplacer());
   }
 
-  fromJSON(source: string): T {
+  fromJSON<T extends object>(source: string): T {
     const objectMap = new Map();
 
-    let obj = JSON.parse(source);
+    const obj = JSON.parse(source);
 
-    let crawlObjectIds = (parent: any) => {
-      for (let field in parent) {
-        let value = parent[field];
-        if (field === JSONObjectMapper._ref_attr_id) {
+    const crawlObjectIds = (parent: any) => {
+      for (const field in parent) {
+        const value = parent[field];
+        if (field === JSONObjectMapper.refAttrId) {
           objectMap.set(value, parent);
         } else if (value != null && typeof value === 'object') {
           crawlObjectIds(value);
@@ -55,14 +55,14 @@ export class JSONObjectMapper<T> {
     };
     crawlObjectIds(obj);
 
-    let replaceCircularReferences = (parent: any) => {
-      for (let field in parent) {
-        let value = parent[field];
+    const replaceCircularReferences = (parent: any) => {
+      for (const field in parent) {
+        const value = parent[field];
 
         if (value != null && typeof value === 'object') {
-          const circleRef = value[JSONObjectMapper._ref_attr];
-          if (value != null && circleRef != null && circleRef != undefined) {
-            let replaceWith = objectMap.get(circleRef);
+          const circleRef = value[JSONObjectMapper.refAttr];
+          if (value !== null && circleRef !== null && circleRef !== undefined) {
+            const replaceWith = objectMap.get(circleRef);
             parent[field] = replaceWith;
           } else {
             replaceCircularReferences(value);
