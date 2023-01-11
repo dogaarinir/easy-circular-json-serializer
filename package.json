@@ -1,6 +1,6 @@
 {
   "name": "easy-circular-json-serializer",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "NPM for serialization and de-serialization of circular objects.",
   "main": "lib/src/index.js",
   "types": "lib/src/index.d.ts",

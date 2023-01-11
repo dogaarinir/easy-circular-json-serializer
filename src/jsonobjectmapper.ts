@@ -93,7 +93,7 @@ export class JSONObjectMapper {
                 }
               }
             }
-          }          
+          }
         }
       }
       return parentClone;
@@ -113,7 +113,7 @@ export class JSONObjectMapper {
             } else {
               replaceCircularReferences(value);
             }
-          }          
+          }
         }
       }
     };
