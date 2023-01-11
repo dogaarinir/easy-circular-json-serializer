@@ -1,0 +1,12 @@
+Publication steps:
++ npm run format
++ npm run lint
++ update version in package.json
++ npm publish
+
+
+
+# Further readings for npm packaging and publication process.
+https://itnext.io/step-by-step-building-and-publishing-an-npm-typescript-package-44fe7164964c
+
+https://www.tsmean.com/articles/how-to-write-a-typescript-library/
