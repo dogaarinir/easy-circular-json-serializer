@@ -2,20 +2,17 @@ import  {JSONObjectMapper}  from "../src/jsonobjectmapper";
 
 
 class SVG {
-  public definition: String | null = null;
+  public definition: string | null = null;
 }
 
 
 class MLString {
-  public de: String | null = null;
-  public en: String | null = null;
-  public nl: String | null = null;
-  public tr: String | null = null;
+  public de: string | null = null;
+  public en: string | null = null;
+  public nl: string | null = null;
+  public tr: string | null = null;
 
-  constructor() {
-  }
-
-  public static create(de: String): MLString {
+  public static create(de: string): MLString {
     const ret: MLString = new MLString();
     ret.de = de;
     return ret;
@@ -37,7 +34,7 @@ class PDAttributeMeta extends PDMemberMeta {
 
 class Subsystem extends PDMeta {
 
-  public types: Array<PDTypeMeta> = new Array<PDTypeMeta>();
+  public types: PDTypeMeta[] = new Array<PDTypeMeta>();
 
   public application: PDApplication | null = null;
 }
@@ -52,17 +49,17 @@ class PDTypeMeta extends PDMeta {
 
   public base: PDTypeMeta | null = null;
 
-  public attributes: Array<PDAttributeMeta> = new Array<PDAttributeMeta>();
+  public attributes: PDAttributeMeta[] = new Array<PDAttributeMeta>();
 
   public subsystem: Subsystem | null = null;
 }
 
 class PDApplication extends PDMeta {
 
-  public types: Array<PDTypeMeta> = new Array<PDTypeMeta>();
-  public navigationMenu: Array<PDTypeMeta> = new Array<PDTypeMeta>();
-  public globalMenu: Array<PDTypeMeta> = new Array<PDTypeMeta>();
-  public subsystems: Array<Subsystem> = new Array<Subsystem>();
+  public types: PDTypeMeta[] = new Array<PDTypeMeta>();
+  public navigationMenu: PDTypeMeta[] = new Array<PDTypeMeta>();
+  public globalMenu: PDTypeMeta[] = new Array<PDTypeMeta>();
+  public subsystems: Subsystem[] = new Array<Subsystem>();
 
   public get size(): number {
     return this.types.length;
@@ -72,16 +69,16 @@ class PDApplication extends PDMeta {
 const application = new PDApplication();
 application.ergname = MLString.create('Angebotsmanagement');
 application.name = "Angebotsmanagement"
-let ssAngebote: Subsystem = new Subsystem();
+const ssAngebote: Subsystem = new Subsystem();
 ssAngebote.ergname = MLString.create('Angebote');
 ssAngebote.name = 'Angebote';
 ssAngebote.application = application;
-let ssKontakte: Subsystem = new Subsystem();
+const ssKontakte: Subsystem = new Subsystem();
 ssKontakte.ergname = MLString.create('Kontakte');
 ssKontakte.name = 'Kontakte';
 ssKontakte.application = application;
 
-let angebot: PDTypeMeta = new PDTypeMeta();
+const angebot: PDTypeMeta = new PDTypeMeta();
 angebot.ergname = MLString.create('Angebot');
 angebot.name = 'Angebot';
 angebot.ergnamePlural = MLString.create('Angebote');
@@ -109,13 +106,13 @@ test('JSON2', () => {
   expect(application.size).toBe(1);
 
   const json = mapper.toJSON(application);
-  //console.log(json);
+  // console.log(json);
 
   const deserialised:any = mapper.fromJSON(json);
-  //console.log(deserialised);
+  // console.log(deserialised);
 
   const json2 = mapper.toJSON(deserialised);
-  //console.log(json2);
+  // console.log(json2);
   expect(json.length).toBe(json2.length);
 
   // Same reference (test a)

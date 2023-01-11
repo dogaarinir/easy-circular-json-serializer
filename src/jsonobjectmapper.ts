@@ -1,17 +1,17 @@
 export class JSONObjectMapper {
   private static readonly refAttr: string = 'circRef';
   private static readonly refAttrId: string = JSONObjectMapper.refAttr + 'Id';
-  private static readonly refAttrClass: string = JSONObjectMapper.refAttr + "CN";
+  private static readonly refAttrClass: string = JSONObjectMapper.refAttr + 'CN';
 
-  private factories: Map<String, () => Object> = new Map();
+  private factories: Map<string, () => object> = new Map();
 
   /**
-   * 
-   * @param name The name must correspond to the name of the objects constructor which will be serialised in the 
+   *
+   * @param name The name must correspond to the name of the objects constructor which will be serialised in the
    * attribute 'refAttrClass'
    * @param factory A factory method which is responsible to create a new instance of that type.
    */
-  public addConstructorHandler(name: String, factory: () => Object) {
+  public addConstructorHandler(name: string, factory: () => object) {
     this.factories.set(name, factory);
   }
 
@@ -36,7 +36,7 @@ export class JSONObjectMapper {
         // no, so we will serialize and mark it, so we can remember it again.
         seen.add(value);
         value[JSONObjectMapper.refAttrId] = id;
-        if (value.constructor != undefined && value.constructor.name != undefined) {
+        if (value.constructor !== undefined && value.constructor.name !== undefined) {
           value[JSONObjectMapper.refAttrClass] = value.constructor.name;
         }
         objectMap.set(value, id++);
@@ -66,28 +66,30 @@ export class JSONObjectMapper {
       let parentRefId: number | null = null;
 
       for (const field in parent) {
-        const value = parent[field];
-        if (field === JSONObjectMapper.refAttrId) {
-          objectMap.set(value, parentClone);
-          // We need to save this objects reference id if we need to clone that instance.
-          // In this case, we will update the objectMap-cache.
-          parentRefId = value;
-        } else if (value != null && typeof value === 'object') {
-          const valueClone = crawlObjectIds(value);
-          if (value != valueClone) {
-            parent[field] = valueClone;
-          }
-        } else if (field === JSONObjectMapper.refAttrClass && this.factories.has(value)) {
-          // we know this class and have a factory to create a typesafe instance from the generic Object instance.
-          const factory: (() => Object) | undefined = this.factories.get(value);
-          if (factory != null && factory != undefined) {
-            parentClone = factory() as any;
-            // copy all properties from the source to the typesafe clone instance.
-            for (var attr in parent) {
-              if (parent.hasOwnProperty(attr)) {
-                parentClone[attr] = parent[attr];
-                if (parentRefId != null) {
-                  objectMap.set(parentRefId, parentClone);
+        if (parent.hasOwnProperty(field)) {
+          const value = parent[field];
+          if (field === JSONObjectMapper.refAttrId) {
+            objectMap.set(value, parentClone);
+            // We need to save this objects reference id if we need to clone that instance.
+            // In this case, we will update the objectMap-cache.
+            parentRefId = value;
+          } else if (value != null && typeof value === 'object') {
+            const valueClone = crawlObjectIds(value);
+            if (value !== valueClone) {
+              parent[field] = valueClone;
+            }
+          } else if (field === JSONObjectMapper.refAttrClass && this.factories.has(value)) {
+            // we know this class and have a factory to create a typesafe instance from the generic Object instance.
+            const factory: (() => object) | undefined = this.factories.get(value);
+            if (factory !== null && factory !== undefined) {
+              parentClone = factory() as any;
+              // copy all properties from the source to the typesafe clone instance.
+              for (const attr in parent) {
+                if (parent.hasOwnProperty(attr)) {
+                  parentClone[attr] = parent[attr];
+                  if (parentRefId != null) {
+                    objectMap.set(parentRefId, parentClone);
+                  }
                 }
               }
             }
@@ -100,16 +102,18 @@ export class JSONObjectMapper {
 
     const replaceCircularReferences = (parent: any) => {
       for (const field in parent) {
-        const value = parent[field];
+        if (parent.hasOwnProperty(field)) {
+          const value = parent[field];
 
-        if (value != null && typeof value === 'object') {
-          const circleRef = value[JSONObjectMapper.refAttr];
-          if (value !== null && circleRef !== null && circleRef !== undefined) {
-            const replaceWith = objectMap.get(circleRef);
-            parent[field] = replaceWith;
-          } else {
-            replaceCircularReferences(value);
-          }
+          if (value != null && typeof value === 'object') {
+            const circleRef = value[JSONObjectMapper.refAttr];
+            if (value !== null && circleRef !== null && circleRef !== undefined) {
+              const replaceWith = objectMap.get(circleRef);
+              parent[field] = replaceWith;
+            } else {
+              replaceCircularReferences(value);
+            }
+          }          
         }
       }
     };
